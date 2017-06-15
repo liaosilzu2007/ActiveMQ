@@ -17,6 +17,7 @@
         http://activemq.apache.org/schema/core
         http://activemq.apache.org/schema/core/activemq-core-5.12.1.xsd">
 
+    <!--    配置连接工厂  start   -->
     <bean id="connectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
         <property name="sessionCacheSize" value="100"/>
         <property name="targetConnectionFactory" ref="amqConnectionFactory"/>
@@ -27,7 +28,30 @@
         userName="admin"
         password="admin"
     />
+    <!--    配置连接工厂  end   -->
 
+    <!--    配置生产者  start   -->
+    <bean id="jmsQueueTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <constructor-arg name="connectionFactory" ref="connectionFactory"/>
+        <property name="pubSubDomain" value="flase"/>
+    </bean>
+
+    <bean id="jmsTopicTemplate" class="org.springframework.jms.core.JmsTemplate">
+        <constructor-arg name="connectionFactory" ref="connectionFactory"/>
+        <property name="pubSubDomain" value="true"/>
+    </bean>
+    <!--    配置生产者  end   -->
+
+    <!--    配置消费者  start   -->
+
+    <!--    定义Queue的监听器 -->
+    <jms:listener-container acknowledge="auto" destination-type="queue" connection-factory="connectionFactory" container-type="default">
+
+    </jms:listener-container>
+    <jms:listener-container destination-type="topic" connection-factory="connectionFactory" container-type="default" acknowledge="auto">
+
+    </jms:listener-container>
+    <!--    配置消费者  start   -->
 
 
 
