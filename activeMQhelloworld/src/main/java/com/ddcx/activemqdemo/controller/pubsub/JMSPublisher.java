@@ -1,4 +1,4 @@
-package com.ddcx.activemq.pubsub;
+package com.ddcx.activemqdemo.controller.pubsub;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 

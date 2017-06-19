@@ -1,4 +1,4 @@
-package com.ddcx.activemq.pubsub;
+package com.ddcx.activemqdemo.controller.pubsub;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

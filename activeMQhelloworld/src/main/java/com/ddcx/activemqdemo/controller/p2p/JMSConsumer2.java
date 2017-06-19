@@ -1,4 +1,4 @@
-package com.ddcx.activemq.p2p;
+package com.ddcx.activemqdemo.controller.p2p;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;

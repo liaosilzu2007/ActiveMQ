@@ -1,6 +1,5 @@
-package com.ddcx.activemq.pubsub;
+package com.ddcx.activemqdemo.controller.pubsub;
 
-import com.ddcx.activemq.p2p.Listener;
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
 

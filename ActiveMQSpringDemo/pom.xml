@@ -12,8 +12,11 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.version>4.3.8.RELEASE</spring.version>
+        <spring.version>4.1.0.RELEASE</spring.version>
     </properties>
+    <build>
+        <finalName>ActiveMQSpringDemo</finalName>
+    </build>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -23,11 +26,7 @@
         </dependency>
 
         <!-- Spring     start-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
+        <!-- Spring package dependency -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -45,13 +44,14 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
+            <artifactId>spring-core</artifactId>
             <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-messaging</artifactId>
+            <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -65,10 +65,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <artifactId>spring-aop</artifactId>
             <version>${spring.version}</version>
-            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-messaging</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <!-- Spring     end-->
 
         <!-- Spring和JMS     start-->
@@ -87,6 +92,14 @@
         </dependency>
         <!-- activeMQ     end-->
 
+        <!-- xbean 如<amq:connectionFactory />        start-->
+        <dependency>
+            <groupId>org.apache.xbean</groupId>
+            <artifactId>xbean-spring</artifactId>
+            <version>4.5</version>
+        </dependency>
+        <!-- xbean 如<amq:connectionFactory />       end-->
+
         <!-- JSP页面相关    start-->
         <dependency>
             <groupId>jstl</groupId>
@@ -101,14 +114,6 @@
         </dependency>
         <!-- JSP页面相关    end-->
 
-        <!-- xbean 如<amq:connectionFactory />        start-->
-        <dependency>
-            <groupId>org.apache.xbean</groupId>
-            <artifactId>xbean-spring</artifactId>
-            <version>4.5</version>
-        </dependency>
-        <!-- xbean 如<amq:connectionFactory />       end-->
-
         <!-- 日志     start-->
         <dependency>
             <groupId>log4j</groupId>
@@ -118,7 +123,4 @@
         <!-- 日志     end-->
 
     </dependencies>
-    <build>
-        <finalName>ActiveMQSpringDemo</finalName>
-    </build>
 </project>
