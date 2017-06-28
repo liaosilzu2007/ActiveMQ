@@ -40,10 +40,12 @@
     <!--    配置消费者  start   -->
     <!--    定义Queue的监听器 -->
     <jms:listener-container acknowledge="auto" destination-type="queue" connection-factory="connectionFactory" container-type="default">
-
+        <jms:listener destination="testQueue" ref="queueListener1"/>
+        <jms:listener destination="testQueue" ref="queueListener2"/>
     </jms:listener-container>
     <jms:listener-container destination-type="topic" connection-factory="connectionFactory" container-type="default" acknowledge="auto">
-
+        <jms:listener destination="testTopic" ref="topicListener1"/>
+        <jms:listener destination="testTopic" ref="topicListener2"/>
     </jms:listener-container>
     <!--    配置消费者  end   -->
 
