@@ -1,4 +1,4 @@
-package com.ddcx.activemqdemo.mq.producer.topic;
+package com.ddcx.activespring;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,31 +9,28 @@ import org.springframework.stereotype.Component;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 /**
- * Created by liaosi on 2017/6/19.
+ * Created by liaosi on 2017/6/16.
  */
-@Component(value = "topicSender")
-public class TopicSender {
+@Component(value = "queueSender")
+public class QueueSender {
 
     @Autowired
-    @Qualifier(value = "jmsTopicTemplate")
+    @Qualifier(value = "jmsQueueTemplate")
     private JmsTemplate jmsTemplate;
 
-
     /**
-     * 发送一条消息到指定的主题（目标）
-     * @param topicName 主题名称
-     * @param message   消息内容
+     * 发送一条消息到指定的队列（目标）
+     * @param queueName 队列名称
+     * @param message 消息内容
      */
-    public void send(String topicName, String message) {
-        jmsTemplate.send(topicName, new MessageCreator() {
+    public void send(String queueName, String message) {
+        jmsTemplate.send(queueName, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
                 return session.createTextMessage(message);
             }
         });
     }
-
 }

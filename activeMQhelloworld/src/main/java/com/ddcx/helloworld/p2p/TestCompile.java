@@ -1,4 +1,4 @@
-package com.ddcx.activemqdemo.controller.p2p;
+package com.ddcx.helloworld.p2p;
 
 /**
  * Created by liaosi on 2017/6/11.

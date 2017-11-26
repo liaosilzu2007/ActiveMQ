@@ -1,4 +1,4 @@
-package com.ddcx.activemqdemo.mq.comsumer.queue;
+package com.ddcx.activespring.comsumer.queue;
 
 import org.springframework.stereotype.Component;
 

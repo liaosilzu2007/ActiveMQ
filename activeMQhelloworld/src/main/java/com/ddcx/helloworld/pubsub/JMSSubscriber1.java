@@ -1,4 +1,4 @@
-package com.ddcx.activemqdemo.controller.p2p;
+package com.ddcx.helloworld.pubsub;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -6,9 +6,10 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import javax.jms.*;
 
 /**
+ * 消息订阅者一
  * Created by liaosi on 2017/6/11.
  */
-public class JMSConsumer2 {
+public class JMSSubscriber1 {
 
     private static final String USERNAME = ActiveMQConnection.DEFAULT_USER; //默认的连接用户名：null
     private static final String PASSWORD = ActiveMQConnection.DEFAULT_PASSWORD; //默认的连接密码
@@ -29,9 +30,9 @@ public class JMSConsumer2 {
             connection.start();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);  //消费不需要加事务
             //创建一个名称为HelloWorld的消息队列，这个必须和生产者创建的额队列对应
-            destination = session.createQueue("helloworld! ActiveMQ");
+            destination = session.createTopic("FirstTopic");
             messageConsumer = session.createConsumer(destination);//创建的消息消费者
-            messageConsumer.setMessageListener(new Listener()); //注册消息监听
+            messageConsumer.setMessageListener(new Listener1()); //注册消息监听
 
         } catch (Exception e) {
             e.printStackTrace();

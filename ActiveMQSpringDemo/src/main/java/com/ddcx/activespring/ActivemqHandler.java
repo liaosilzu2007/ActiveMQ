@@ -1,8 +1,6 @@
-package com.ddcx.activemqdemo.controller;
+package com.ddcx.activespring;
 
-import com.ddcx.activemqdemo.mq.producer.queue.QueueSender;
-import com.ddcx.activemqdemo.mq.producer.topic.TopicSender;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ddcx.activespring.topic.TopicSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
