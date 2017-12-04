@@ -28,7 +28,7 @@ public class JMSConsumer {
             connection = connectionFactory.createConnection();//通过连接工厂获取连接
             connection.start();
             session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);  //消费不需要加事务
-            //创建一个名称为HelloWorld的消息队列，这个必须和生产者创建的额队列对应
+            //创建一个名称为HelloWorld的消息队列，这个必须和生产者创建的队列对应
             destination = session.createQueue("helloworld! ActiveMQ");
             messageConsumer = session.createConsumer(destination);//创建的消息消费者
 
