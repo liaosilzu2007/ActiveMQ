@@ -6,7 +6,7 @@ package com.lzumetal.mq.kafka.demo;
  * @author: liaosi
  * @date: 2018-01-30
  */
-public class Config {
+public class Constants {
 
     final static String GROUP_ID = "test_group";
     final static String TOPIC = "my_topic";

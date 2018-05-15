@@ -21,14 +21,14 @@ public class MyKafkaConsumer {
     public void comsumeMsg() {
 
         Properties props = new Properties();
-        props.put("bootstrap.servers", Config.KAFKA_SERVER_ADRESS + ":" + Config.KAFKA_SERVER_PORT);
-        props.put("group.id", Config.GROUP_ID);
+        props.put("bootstrap.servers", Constants.KAFKA_SERVER_ADRESS + ":" + Constants.KAFKA_SERVER_PORT);
+        props.put("group.id", Constants.GROUP_ID);
         props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Arrays.asList(Config.TOPIC));
+        consumer.subscribe(Arrays.asList(Constants.TOPIC));
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
