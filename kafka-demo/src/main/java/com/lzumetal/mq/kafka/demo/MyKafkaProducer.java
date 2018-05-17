@@ -50,8 +50,11 @@ public class MyKafkaProducer {
         for (int i = 0; i < 10; i++) {
             String msg = "Message_test_" + i;
             System.out.println("produce : " + msg);
-            //send方法是异步的。当它被调用时，它会将消息记录添加到待发送缓冲区并立即返回。
-            //使用这种方式可以使生产者聚集一批消息记录后一起发送，从而提高效率。
+
+            /*
+             * send方法是异步的。当它被调用时，它会将消息记录添加到待发送缓冲区并立即返回。
+             * 使用这种方式可以使生产者聚集一批消息记录后一起发送，从而提高效率。
+             */
             producer.send(new ProducerRecord<>(Constants.TOPIC, Integer.toString(i), msg));
             sleep(1);
         }
