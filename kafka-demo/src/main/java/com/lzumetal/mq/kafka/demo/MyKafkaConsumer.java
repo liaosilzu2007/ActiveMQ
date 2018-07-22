@@ -3,7 +3,6 @@ package com.lzumetal.mq.kafka.demo;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
@@ -17,33 +16,64 @@ import java.util.concurrent.TimeUnit;
  */
 public class MyKafkaConsumer {
 
-    private KafkaConsumer<String, String> consumer;
 
-    @Before
-    public void init() {
+    /**
+     * 自动提交offset
+     */
+    @Test
+    public void comsumeMsgAutoCommit() {
+
         Properties props = new Properties();
         props.put("bootstrap.servers", Constants.KAFKA_SERVER_ADRESS + ":" + Constants.KAFKA_SERVER_PORT);
         props.put("group.id", Constants.GROUP_ID);
-        props.put("enable.auto.commit", "true"); //消费之后自动提交
+        props.put("enable.auto.commit", "true");
         props.put("auto.commit.interval.ms", "1000");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        consumer = new KafkaConsumer<>(props);
-    }
-
-
-
-    @Test
-    public void comsumeMsg() {
-
-
-        consumer.subscribe(Arrays.asList(Constants.MY_TOPIC));
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Arrays.asList(Constants.TOPIC));
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(100);
             for (ConsumerRecord<String, String> record : records) {
                 System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
             }
             sleep(1);
+        }
+    }
+
+    /**
+     * 手动提交offset
+     */
+    @Test
+    public void consumerMsgManualCommit() {
+        Properties props = new Properties();
+        props.put("bootstrap.servers", "localhost:9092");
+        props.put("group.id", "test");
+        props.put("enable.auto.commit", "false");
+        props.put("auto.commit.interval.ms", "1000");
+        props.put("session.timeout.ms", "30000");
+        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Arrays.asList(Constants.TOPIC));
+        final int minBatchSize = 200;
+        List<ConsumerRecord<String, String>> buffer = new ArrayList<>();
+        while (true) {
+            ConsumerRecords<String, String> records = consumer.poll(100);
+            for (ConsumerRecord<String, String> record : records) {
+                buffer.add(record);
+            }
+            if (buffer.size() >= minBatchSize) {
+                insertIntoDb(buffer);
+                consumer.commitSync();
+                buffer.clear();
+            }
+        }
+    }
+
+    private void insertIntoDb(List<ConsumerRecord<String, String>> buffer) {
+        for (ConsumerRecord<String, String> record : buffer) {
+            System.out.printf("insertIntoDb:offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
         }
     }
 
