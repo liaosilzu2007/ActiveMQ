@@ -4,6 +4,7 @@ package com.lzumetal.mq.kafka.demo;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Properties;
@@ -19,12 +20,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class MyKafkaProducer {
 
+    private Producer<String, String> producer;
 
-    private static final String TOPIC = "my_topic";
 
-    @Test
-    public void produceMsg() {
-
+    @Before
+    public void init() {
         Properties props = new Properties();
         props.put("bootstrap.servers", Constants.KAFKA_SERVER_ADRESS + ":" + Constants.KAFKA_SERVER_PORT);
 
@@ -45,14 +45,18 @@ public class MyKafkaProducer {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
-        Producer<String, String> producer = new KafkaProducer<>(props);
+        producer = new KafkaProducer<>(props);
+    }
+
+    @Test
+    public void produceMsg() {
 
         for (int i = 0; i < 10; i++) {
             String msg = "Message_test_" + i;
             System.out.println("produce : " + msg);
             //send方法是异步的。当它被调用时，它会将消息记录添加到待发送缓冲区并立即返回。
             //使用这种方式可以使生产者聚集一批消息记录后一起发送，从而提高效率。
-            producer.send(new ProducerRecord<>(Constants.TOPIC, Integer.toString(i), msg));
+            producer.send(new ProducerRecord<>(Constants.MY_TOPIC, Integer.toString(i), msg));
             sleep(1);
         }
         producer.close();
@@ -66,8 +70,6 @@ public class MyKafkaProducer {
             e.printStackTrace();
         }
     }
-
-
 
 
 }
